@@ -1,0 +1,14 @@
+{% extends 'parent.html' %}
+{% block content %}
+    <div class="container mt-5 text-center">
+        <h2 class="text-primary">Update Trainee</h2>
+        <form method="POST" class="card p-4 shadow-sm">
+            {% csrf_token %}
+            <div class="mb-3 text-start">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="trainee_name" value="{{ trainee.name }}" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Update Data</button>
+        </form>
+    </div>
+{% endblock %}

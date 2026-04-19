@@ -1,0 +1,50 @@
+{% extends 'parent.html' %}
+
+{% block title %} Add New Trainee {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white text-center">
+                <h3 class="mb-0">Add New Trainee</h3>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-bold">Full Name</label>
+                        
+                        <input type="text" 
+                               name="trainee_name" 
+                               id="name" 
+                               class="form-control {% if errors.name %}is-invalid{% endif %}" 
+                               placeholder="e.g. rana hany"
+                               value="{{ request.POST.trainee_name }}">
+
+                        {% if errors.name %}
+                            <div class="invalid-feedback d-block fw-bold">
+                                {{ errors.name }}
+                            </div>
+                        {% endif %}
+                        
+                        <div class="form-text mt-2 text-muted">
+                            Note: Names must be at least 3 characters and letters only.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Save to Database
+                        </button>
+                        <a href="/trainee/list/" class="btn btn-outline-secondary">
+                            Cancel and Go Back
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

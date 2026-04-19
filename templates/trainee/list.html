@@ -1,0 +1,43 @@
+{% extends 'parent.html' %}
+
+{% block title %} Trainees List {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary">Trainees Directory</h2>
+    <a href="/trainee/add/" class="btn btn-primary">+ Add New Trainee</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped border">
+        <thead class="table-dark">
+            <tr>
+                <th># ID</th>
+                <th>Full Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in trainees %}
+            <tr>
+                <td>{{ t.id }}</td>
+                <td>{{ t.name }}</td>
+                <td>
+                    <a href="/trainee/{{ t.id }}/" class="btn btn-sm btn-info">View Details</a>
+                    
+                    <a href="/trainee/update/{{ t.id }}/" class="btn btn-sm btn-warning">Edit</a>
+                    
+                    <a href="/trainee/delete/{{ t.id }}/" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center py-4 text-muted">
+                    No trainees found in the database.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

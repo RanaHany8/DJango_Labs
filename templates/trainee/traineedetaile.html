@@ -1,0 +1,11 @@
+{% extends 'parent.html' %}
+{% block content %}
+    <div class="container mt-5">
+        <h2>Trainee Details</h2>
+        <div class="card p-4">
+            <p><strong>ID:</strong> {{ trainee.id }}</p>
+            <p><strong>Full Name:</strong> {{ trainee.name }}</p>
+            <a href="/trainee/list/" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+{% endblock %}
