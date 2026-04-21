@@ -1,11 +1,25 @@
 {% extends 'parent.html' %}
 {% block content %}
-    <div class="container mt-5">
-        <h2>Trainee Details</h2>
-        <div class="card p-4">
-            <p><strong>ID:</strong> {{ trainee.id }}</p>
-            <p><strong>Full Name:</strong> {{ trainee.name }}</p>
-            <a href="/trainee/list/" class="btn btn-secondary">Back to List</a>
+<div class="max-w-lg mx-auto mt-10">
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+        <div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-6">
+            <h2 class="text-white text-2xl font-bold">Trainee Profile Card</h2>
+        </div>
+        <div class="p-8 space-y-4">
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-gray-400 font-semibold uppercase text-xs">ID Number</span>
+                <span class="text-gray-900 font-bold">#{{ trainee.id }}</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-gray-400 font-semibold uppercase text-xs">Full Name</span>
+                <span class="text-gray-900 font-bold text-lg italic text-blue-800">{{ trainee.name }}</span>
+            </div>
+            <div class="pt-4">
+                <a href="{% url 'trainee-list' %}" class="block text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition">
+                    ← Back to Directory
+                </a>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}

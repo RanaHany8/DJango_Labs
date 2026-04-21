@@ -1,59 +1,35 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
+from django.urls import reverse_lazy
 from .models import Trainee
+from .forms import TraineeForm
 
 
-def trainee_list(request):
-    all_trainees = Trainee.objects.all()
-    return render(request, 'trainee/list.html', {'trainees': all_trainees})
-
-def add_trainee(request):
-    errors = {}
-    if request.method == 'POST':
-        t_name = request.POST.get('trainee_name', '').strip()
-        
-  
-        if len(t_name) < 3:
-            errors['name'] = "Name must be at least 3 characters long."
-        
-  
-        elif any(char.isdigit() for char in t_name):
-            errors['name'] = "Name must contain letters only. Numbers are not allowed."
-            
-  
-        if not errors:
-            Trainee.objects.create(name=t_name)
-            return redirect('/trainee/list/')
-
-    return render(request, 'trainee/add.html', {'errors': errors})
+class TraineeListView(ListView):
+    model = Trainee
+    template_name = 'trainee/list.html'
+    context_object_name = 'trainees'
 
 
 def trainee_details(request, id):
+    from django.shortcuts import render, get_object_or_404
     trainee = get_object_or_404(Trainee, id=id)
     return render(request, 'trainee/traineedetaile.html', {'trainee': trainee})
 
 
-def trainee_delete(request, id):
-    trainee = get_object_or_404(Trainee, id=id)
-    trainee.delete()
-    return redirect('/trainee/list/') 
+class TraineeCreateView(CreateView):
+    model = Trainee
+    form_class = TraineeForm
+    template_name = 'trainee/add.html'
+    success_url = reverse_lazy('trainee-list') 
 
 
-def trainee_update(request, id):
-    trainee = get_object_or_404(Trainee, id=id)
-    errors = {}
-    if request.method == 'POST':
-        new_name = request.POST.get('trainee_name', '').strip()
-        
-    
-        if len(new_name) < 3:
-            errors['name'] = "Name is too short."
+class TraineeUpdateView(UpdateView):
+    model = Trainee
+    form_class = TraineeForm
+    template_name = 'trainee/update.html'
+    success_url = reverse_lazy('trainee-list')
 
-        elif any(char.isdigit() for char in new_name):
-            errors['name'] = "Numbers are not allowed in the name."
-            
-        if not errors:
-            trainee.name = new_name
-            trainee.save()
-            return redirect('/trainee/list/') 
-            
-    return render(request, 'trainee/update.html', {'trainee': trainee, 'errors': errors})
+class TraineeDeleteView(DeleteView):
+    model = Trainee
+    template_name = 'trainee/delete.html' 
+    success_url = reverse_lazy('trainee-list')
